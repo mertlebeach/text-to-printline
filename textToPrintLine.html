@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>TEST</title>
+</head>
+<body>
+  <textarea id="inputId" class="input" rows="5" cols="50"></textarea>
+  <br /><br />
+  <button id="inputButtonId" class="inputButton">Convert</button>
+  <br /><br />
+  <div class="output"></div>
+</body>
+</html>
+
+<script>
+  var $input = document.querySelector('.input');
+  var $output = document.querySelector('.output');
+
+  document.getElementById('inputButtonId').addEventListener('click', function (event) {
+
+    $output.innerHTML = "";
+    var textArea = document.getElementById('inputId');
+    var lines = textArea.value.split('\n');
+    var outputString = "";
+
+    cSharpStart = "Console.WriteLine(\""
+    cSharpEnd = "\");"
+
+    powershellStart = "Write-Output \""
+    powershellEnd = "\""
+
+    for (var i = 0; i < lines.length; i++) {
+      var charArray = lines[i].split("");
+      var charArrayLength = charArray.length;
+      for (var j = 0; j < charArrayLength; j++) {
+        if (charArray[j] === "\\") {
+          console.log(charArray.join(""));
+          charArray.splice(j, 0, "\\");
+          console.log(charArray.join(""));
+        }
+		if (charArray[j] === " "){
+		  charArray[j] = "&nbsp";
+		}
+      }
+	  
+      outputString = outputString + cSharpStart + charArray.join("") + cSharpEnd + "<br />";
+    }
+    $output.innerHTML = outputString;
+
+  }, false);
+
+</script>
